@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharkawy - Premium Phones Store</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Shopping Cart Modal -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🛒 Shopping Cart</h2>
+                <span class="close-cart">&times;</span>
+            </div>
+            <div id="cart-items-list" class="cart-items">
+                <!-- Cart items will be inserted here -->
+            </div>
+            <div class="modal-footer">
+                <div class="cart-summary">
+                    <span>Total:</span>
+                    <span id="cart-total">$0.00</span>
+                </div>
+                <button class="checkout-btn" onclick="cart.checkout()">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-section">
+                <h1 class="logo">SHAR<span class="logo-phone">📱</span>AWY</h1>
+            </div>
+            <ul class="nav-list">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="the best selling.html">Best Selling</a></li>
+                <li><a href="accessories.html">Accessories</a></li>
+                <li><a href="Returnpolicy.html">Return Policy</a></li>
+                <li><a href="contactus.html">Contact Us</a></li>
+            </ul>
+            <div class="cart-icon" title="Shopping Cart">
+                🛒
+                <span id="cart-count">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Image Slider -->
+    <section class="hero" id="hero-slider">
+    </section>
+
+    <!-- Hero CTA Section -->
+    <section class="hero-cta">
+        <div class="hero-content">
+            <h1>Welcome to Sharkawy Phones</h1>
+            <p>Your Ultimate Destination for Premium Smartphones</p>
+            <a href="the best selling.html" class="cta-btn">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="products">
+        <h2>Our Latest Phones</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="images/iphone 16 pro.jpeg" alt="iPhone 16 Pro">
+                </div>
+                <h3>iPhone 16 Pro</h3>
+                <p class="price">70000 EGP</p>
+                <p class="description">Latest Apple flagship with A17 chip</p>
+                <button class="add-btn add-to-cart-btn">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="images/iphone 16.webp" alt="iPhone 16">
+                </div>
+                <h3>iPhone 16</h3>
+                <p class="price">60000 EGP</p>
+                <p class="description">Great value with core iPhone features</p>
+                <button class="add-btn add-to-cart-btn">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="images/iphone 17.jpg" alt="iPhone 17">
+                </div>
+                <h3>iPhone 17</h3>
+                <p class="price">80000 EGP</p>
+                <p class="description">Powerful performance and design</p>
+                <button class="add-btn add-to-cart-btn">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="images/iphone-17-pro.webp" alt="iPhone 17 Pro">
+                </div>
+                <h3>iPhone 17 Pro</h3>
+                <p class="price">120000 EGP</p>
+                <p class="description">Premium features and advanced camera</p>
+                <button class="add-btn add-to-cart-btn">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="feature">
+            <h3>🚚 Free Shipping</h3>
+            <p>On orders over 5000 EGP</p>
+        </div>
+        <div class="feature">
+            <h3>🛡️ 2-Year Warranty</h3>
+            <p>All phones covered</p>
+        </div>
+        <div class="feature">
+            <h3>💳 Easy Returns</h3>
+            <p>30-day money back</p>
+        </div>
+        <div class="feature">
+            <h3>📞 24/7 Support</h3>
+            <p>Always here to help</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Sharkawy Phones. All rights reserved.</p>
+        <p>Email: info@sharkawy.com | Phone: +1-800-SHARKAWY</p>
+    </footer>
+
+    <script src="shopping.js"></script>
+</body>
+</html>

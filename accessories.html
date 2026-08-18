@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessories - Sharkawy Phones</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Shopping Cart Modal -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🛒 Shopping Cart</h2>
+                <span class="close-cart">&times;</span>
+            </div>
+            <div id="cart-items-list" class="cart-items">
+                <!-- Cart items will be inserted here -->
+            </div>
+            <div class="modal-footer">
+                <div class="cart-summary">
+                    <span>Total:</span>
+                    <span id="cart-total">$0.00</span>
+                </div>
+                <button class="checkout-btn" onclick="cart.checkout()">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-section">
+                <h1 class="logo">SHAR<span class="logo-phone">📱</span>AWY</h1>
+            </div>
+            <ul class="nav-list">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="the best selling.html">Best Selling</a></li>
+                <li><a href="accessories.html" class="active">Accessories</a></li>
+                <li><a href="Returnpolicy.html">Return Policy</a></li>
+                <li><a href="contactus.html">Contact Us</a></li>
+            </ul>
+            <div class="cart-icon" title="Shopping Cart">
+                🛒
+                <span id="cart-count">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <section class="page-header">
+        <h1>📦 Phone Accessories</h1>
+        <p>Everything You Need for Your Phone</p>
+    </section>
+
+    <section class="products">
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="images/charger.jpg" alt="Fast Charger">
+                </div>
+                <h3>Fast Charger 65W</h3>
+                <p class="price">$49.99</p>
+                <p class="description">Ultra-fast charging for all phones</p>
+                <button class="add-btn add-to-cart-btn">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="images/airpods.jpg" alt="AirPods Pro">
+                </div>
+                <h3>Wireless Earbuds Pro</h3>
+                <p class="price">$249.99</p>
+                <p class="description">Noise-cancelling with 8-hour battery</p>
+                <button class="add-btn add-to-cart-btn">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-image">🛡️</div>
+                <h3>Premium Phone Case</h3>
+                <p class="price">$24.99</p>
+                <p class="description">Durable and stylish protection</p>
+                <button class="add-btn add-to-cart-btn">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-image">🔋</div>
+                <h3>Power Bank 20000mAh</h3>
+                <p class="price">$39.99</p>
+                <p class="description">Multiple device charging support</p>
+                <button class="add-btn add-to-cart-btn">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-image">📸</div>
+                <h3>Phone Tripod Mount</h3>
+                <p class="price">$19.99</p>
+                <p class="description">Adjustable for all phone sizes</p>
+                <button class="add-btn add-to-cart-btn">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-image">🧲</div>
+                <h3>Magnetic Car Mount</h3>
+                <p class="price">$15.99</p>
+                <p class="description">Strong adhesive, easy installation</p>
+                <button class="add-btn add-to-cart-btn">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-image">🔌</div>
+                <h3>USB-C Cable (3 pack)</h3>
+                <p class="price">$19.99</p>
+                <p class="description">Durable and fast charging</p>
+                <button class="add-btn add-to-cart-btn">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="product-image">📱</div>
+                <h3>Tempered Glass Screen Protector</h3>
+                <p class="price">$12.99</p>
+                <p class="description">9H hardness, scratch resistant</p>
+                <button class="add-btn add-to-cart-btn">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Sharkawy Phones. All rights reserved.</p>
+        <p>Email: info@sharkawy.com | Phone: +1-800-SHARKAWY</p>
+    </footer>
+
+    <script src="shopping.js"></script>
+</body>
+</html>

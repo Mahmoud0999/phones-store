@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Sharkawy Phones</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Shopping Cart Modal -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🛒 Shopping Cart</h2>
+                <span class="close-cart">&times;</span>
+            </div>
+            <div id="cart-items-list" class="cart-items">
+                <!-- Cart items will be inserted here -->
+            </div>
+            <div class="modal-footer">
+                <div class="cart-summary">
+                    <span>Total:</span>
+                    <span id="cart-total">$0.00</span>
+                </div>
+                <button class="checkout-btn" onclick="cart.checkout()">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-section">
+                <h1 class="logo">SHAR<span class="logo-phone">📱</span>AWY</h1>
+            </div>
+            <ul class="nav-list">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="the best selling.html">Best Selling</a></li>
+                <li><a href="accessories.html">Accessories</a></li>
+                <li><a href="Returnpolicy.html">Return Policy</a></li>
+                <li><a href="contactus.html" class="active">Contact Us</a></li>
+            </ul>
+            <div class="cart-icon" title="Shopping Cart">
+                🛒
+                <span id="cart-count">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <section class="page-header">
+        <h1>📞 Contact Us</h1>
+        <p>We're here to help! Get in touch with us</p>
+    </section>
+
+    <section class="contact-container">
+        <!-- Contact Form -->
+        <div class="contact-form-section">
+            <h2>Send us a Message</h2>
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="6" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="contact-info-section">
+            <h2>Contact Information</h2>
+            
+            <div class="info-box">
+                <h3>📍 Address</h3>
+                <p>123 Phone Street<br>Tech City, TC 12345<br>United States</p>
+            </div>
+
+            <div class="info-box">
+                <h3>📞 Phone</h3>
+                <p>Customer Service: +1-800-SHARKAWY<br>Technical Support: +1-800-SHARK-911<br>Sales: +1-800-SHARK-BUY</p>
+            </div>
+
+            <div class="info-box">
+                <h3>📧 Email</h3>
+                <p>General: info@sharkawy.com<br>Support: support@sharkawy.com<br>Sales: sales@sharkawy.com</p>
+            </div>
+
+            <div class="info-box">
+                <h3>🕐 Business Hours</h3>
+                <p>Monday - Friday: 9:00 AM - 9:00 PM<br>Saturday: 10:00 AM - 8:00 PM<br>Sunday: 11:00 AM - 6:00 PM</p>
+            </div>
+
+            <div class="info-box">
+                <h3>🌐 Social Media</h3>
+                <p>Facebook: @SharkawyPhones<br>Twitter: @SharkawyPhones<br>Instagram: @SharkawyPhones</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Sharkawy Phones. All rights reserved.</p>
+        <p>Email: info@sharkawy.com | Phone: +1-800-SHARKAWY</p>
+    </footer>
+
+    <script src="shopping.js"></script>
+</body>
+</html>

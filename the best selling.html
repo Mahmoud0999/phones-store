@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Selling - Sharkawy Phones</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Shopping Cart Modal -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🛒 Shopping Cart</h2>
+                <span class="close-cart">&times;</span>
+            </div>
+            <div id="cart-items-list" class="cart-items">
+                <!-- Cart items will be inserted here -->
+            </div>
+            <div class="modal-footer">
+                <div class="cart-summary">
+                    <span>Total:</span>
+                    <span id="cart-total">$0.00</span>
+                </div>
+                <button class="checkout-btn" onclick="cart.checkout()">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-section">
+                <h1 class="logo">SHAR<span class="logo-phone">📱</span>AWY</h1>
+            </div>
+            <ul class="nav-list">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="the best selling.html" class="active">Best Selling</a></li>
+                <li><a href="accessories.html">Accessories</a></li>
+                <li><a href="Returnpolicy.html">Return Policy</a></li>
+                <li><a href="contactus.html">Contact Us</a></li>
+            </ul>
+            <div class="cart-icon" title="Shopping Cart">
+                🛒
+                <span id="cart-count">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <section class="page-header">
+        <h1>🔥 Best Selling Products</h1>
+        <p>Our Most Popular Phones of 2024</p>
+    </section>
+
+    <section class="products">
+        <div class="products-grid">
+            <div class="product-card featured">
+                <div class="badge">⭐ #1 Best Seller</div>
+                <div class="product-image">
+                    <img src="images/iphone 16 pro.jpeg" alt="iPhone 16 Pro">
+                </div>
+                <h3>iPhone 16 Pro</h3>
+                <p class="price">$999</p>
+                <p class="rating">⭐⭐⭐⭐⭐ (2,450 reviews)</p>
+                <p class="description">The most powerful iPhone with advanced camera system</p>
+                <button class="add-btn add-to-cart-btn">Add to Cart</button>
+            </div>
+            <div class="product-card featured">
+                <div class="badge">⭐ #2 Best Seller</div>
+                <div class="product-image">
+                    <img src="images/iphone-17-pro.webp" alt="iPhone 17 Pro">
+                </div>
+                <h3>iPhone 17 Pro</h3>
+                <p class="price">$1,299</p>
+                <p class="rating">⭐⭐⭐⭐⭐ (1,890 reviews)</p>
+                <p class="description">Ultimate premium phone with exceptional features</p>
+                <button class="add-btn add-to-cart-btn">Add to Cart</button>
+            </div>
+            <div class="product-card featured">
+                <div class="badge">⭐ #3 Best Seller</div>
+                <div class="product-image">
+                    <img src="images/iphone 16.webp" alt="iPhone 16">
+                </div>
+                <h3>iPhone 16</h3>
+                <p class="price">$799</p>
+                <p class="rating">⭐⭐⭐⭐☆ (3,120 reviews)</p>
+                <p class="description">Great value with core iPhone features</p>
+                <button class="add-btn add-to-cart-btn">Add to Cart</button>
+            </div>
+            <div class="product-card featured">
+                <div class="badge">⭐ #4 Best Seller</div>
+                <div class="product-image">
+                    <img src="images/realme.jpg" alt="Realme Phone">
+                </div>
+                <h3>Realme Phone</h3>
+                <p class="price">$499</p>
+                <p class="rating">⭐⭐⭐⭐☆ (2,670 reviews)</p>
+                <p class="description">Affordable phone with solid performance</p>
+                <button class="add-btn add-to-cart-btn">Add to Cart</button>
+            </div>
+            <div class="product-card featured">
+                <div class="badge">⭐ #5 Best Seller</div>
+                <div class="product-image">
+                    <img src="images/iphone 17.jpg" alt="iPhone 17">
+                </div>
+                <h3>iPhone 17</h3>
+                <p class="price">$1,099</p>
+                <p class="rating">⭐⭐⭐⭐⭐ (1,540 reviews)</p>
+                <p class="description">Powerful performance with sleek design</p>
+                <button class="add-btn add-to-cart-btn">Add to Cart</button>
+            </div>
+            <div class="product-card featured">
+                <div class="badge">⭐ #6 Best Seller</div>
+                <div class="product-image">
+                    <img src="images/charger.jpg" alt="Premium Charger">
+                </div>
+                <h3>Fast Charger Bundle</h3>
+                <p class="price">$79.99</p>
+                <p class="rating">⭐⭐⭐⭐☆ (1,320 reviews)</p>
+                <p class="description">Fast charging with universal compatibility</p>
+                <button class="add-btn add-to-cart-btn">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Sharkawy Phones. All rights reserved.</p>
+        <p>Email: info@sharkawy.com | Phone: +1-800-SHARKAWY</p>
+    </footer>
+
+    <script src="shopping.js"></script>
+</body>
+</html>
