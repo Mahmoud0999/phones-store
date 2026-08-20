@@ -1,17 +1,6 @@
 // Shopping Cart Management System
 
 // Format currency for Egyptian Pound
-function formatCurrency(amount) {
-  return `EGP ${Number(amount).toFixed(2)}`;
-}
-
-// Utility to parse a price string safely (removes any non-numeric chars)
-function parsePriceString(priceStr) {
-  if (typeof priceStr === 'number') return priceStr;
-  const cleaned = String(priceStr).replace(/[^0-9.-]/g, '');
-  return parseFloat(cleaned) || 0;
-}
-
 class ShoppingCart {
   constructor() {
     this.cart = JSON.parse(localStorage.getItem('sharkawyCart')) || [];
@@ -24,21 +13,47 @@ class ShoppingCart {
     this.loadProducts();
     this.updateCartUI();
     this.attachAddToCartButtons();
-    this.attachBuyButtons();
   }
 
   loadProducts() {
     this.products = [
       // Phones
-      { id: 1, name: 'iPhone 16 Pro', price: 999, image: 'iphone 16 pro.jpeg', category: 'phones' },
-      { id: 2, name: 'iPhone 16', price: 799, image: 'iphone 16.webp', category: 'phones' },
-      { id: 3, name: 'iPhone 17', price: 1099, image: 'iphone 17.jpg', category: 'phones' },
-      { id: 4, name: 'iPhone 17 Pro', price: 1299, image: 'iphone-17-pro.webp', category: 'phones' },
-      { id: 5, name: 'Realme Phone', price: 499, image: 'realme.jpg', category: 'phones' },
+      { id: 1, name: 'iPhone 16 Pro', price: 999, image: 'images/iphone 16 pro.jpeg', category: 'phones', specs: ['Display: 6.3-inch Super Retina XDR', 'Chip: A18 Pro', 'Camera: 48MP Pro camera system', 'Battery: All-day battery life'] },
+      { id: 2, name: 'iPhone 16', price: 799, image: 'images/iphone 16.webp', category: 'phones', specs: ['Display: 6.1-inch Super Retina XDR', 'Chip: A18', 'Camera: 48MP main camera', 'Battery: Up to 22 hours video playback'] },
+      { id: 3, name: 'iPhone 17', price: 1099, image: 'images/iphone 17.jpg', category: 'phones', specs: ['Display: 6.7-inch OLED display', 'Chip: Advanced performance chip', 'Camera: Dual 48MP lenses', 'Battery: Fast charging support'] },
+      { id: 4, name: 'iPhone 17 Pro', price: 1299, image: 'images/iphone-17-pro.webp', category: 'phones', specs: ['Display: 6.9-inch ProMotion display', 'Chip: Pro-level processing power', 'Camera: Triple 48MP setup', 'Battery: Ultra-efficient power management'] },
+      { id: 5, name: 'Realme Phone', price: 499, image: 'images/realme.jpg', category: 'phones', specs: ['Display: 6.5-inch AMOLED display', 'Chip: Fast octa-core processor', 'Camera: 108MP AI camera', 'Battery: 5000mAh battery'] },
       // Accessories
-      { id: 6, name: 'AirPods Pro', price: 249, image: 'airpods.jpg', category: 'accessories' },
-      { id: 7, name: 'Fast Charger (Type-C)', price: 49.99, image: 'charger.jpg', category: 'accessories' }
+      { id: 6, name: 'AirPods Pro', price: 249, image: 'images/airpods.jpg', category: 'accessories', specs: ['Bluetooth: 5.3 support', 'Battery: Up to 6 hours listening time', 'Features: Active Noise Cancellation', 'Charging: Wireless charging case'] },
+      { id: 7, name: 'Fast Charger', price: 49.99, image: 'images/charger.jpg', category: 'accessories', specs: ['Power: 65W fast charging', 'Compatibility: USB-C devices', 'Safety: Smart temperature control', 'Cable: Included in box'] }
     ];
+  }
+
+  getProductSpecs(productName) {
+    const product = this.products.find(p => p.name === productName);
+    return product?.specs || [
+      'Display: Premium modern display',
+      'Performance: Fast and efficient processing',
+      'Camera: High-quality camera system',
+      'Battery: Long-lasting power'
+    ];
+  }
+
+  getProductData(productCard) {
+    const productName = productCard.querySelector('h3')?.textContent?.trim();
+    const productPriceText = productCard.querySelector('.price')?.textContent || '0';
+    const productDescription = productCard.querySelector('.description')?.textContent?.trim() || 'Premium product from Sharkawy Phones';
+    const productImage = productCard.querySelector('.product-image img')?.src || productCard.querySelector('.product-image')?.textContent || '';
+    const productPrice = parseFloat(productPriceText.replace(/[^0-9.]/g, '')) || 0;
+    const productSpecs = productCard.dataset.specs ? productCard.dataset.specs.split('|') : this.getProductSpecs(productName);
+
+    return {
+      name: productName,
+      price: productPrice,
+      description: productDescription,
+      specs: productSpecs,
+      image: productImage
+    };
   }
 
   attachAddToCartButtons() {
@@ -47,14 +62,10 @@ class ShoppingCart {
       button.addEventListener('click', (e) => {
         const productCard = e.target.closest('.product-card');
         if (productCard) {
-          const productName = productCard.querySelector('h3').textContent;
-          const productPrice = parsePriceString(productCard.querySelector('.price').textContent);
-          const productImage = productCard.querySelector('.product-image img')?.src || productCard.querySelector('.product-image').textContent;
-          
-          // Find product by name
-          let product = this.products.find(p => p.name === productName);
+          const productData = this.getProductData(productCard);
+          let product = this.products.find(p => p.name === productData.name);
           if (!product) {
-            product = { id: Date.now(), name: productName, price: productPrice, image: productImage };
+            product = { id: Date.now(), ...productData };
           }
           
           this.addToCart(product);
@@ -62,40 +73,30 @@ class ShoppingCart {
         }
       });
     });
-  }
 
-  attachBuyButtons() {
     const buyButtons = document.querySelectorAll('.buy-btn');
-    buyButtons.forEach(btn => {
-      btn.addEventListener('click', (e) => {
+    buyButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
         const productCard = e.target.closest('.product-card');
         if (!productCard) return;
-        const name = productCard.querySelector('h3')?.textContent || '';
-        const price = productCard.querySelector('.price')?.textContent || '';
-        const img = productCard.querySelector('.product-image img')?.getAttribute('src') || '';
-        const desc = productCard.querySelector('.description')?.textContent || '';
 
-        const params = new URLSearchParams({
-          name: name,
-          price: price,
-          image: img,
-          desc: desc
-        });
-
-        window.location.href = `product.html?${params.toString()}`;
+        const productData = this.getProductData(productCard);
+        localStorage.setItem('sharkawySelectedProduct', JSON.stringify(productData));
+        window.location.href = 'product.html';
       });
     });
   }
 
   addToCart(product) {
+    const quantityToAdd = Number(product.quantity) > 0 ? Number(product.quantity) : 1;
     const existingItem = this.cart.find(item => item.id === product.id);
     
     if (existingItem) {
-      existingItem.quantity += 1;
+      existingItem.quantity += quantityToAdd;
     } else {
       this.cart.push({
         ...product,
-        quantity: 1
+        quantity: quantityToAdd
       });
     }
     
@@ -124,6 +125,7 @@ class ShoppingCart {
 
   updateCartUI() {
     const cartCount = document.getElementById('cart-count');
+    const cartIcon = document.querySelector('.cart-icon');
     
     if (cartCount) {
       const totalItems = this.cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -136,21 +138,60 @@ class ShoppingCart {
     return this.cart.reduce((total, item) => total + (item.price * item.quantity), 0);
   }
 
+  formatCurrency(value) {
+    return `${value.toFixed(2)} EGP`;
+  }
+
   getCartItems() {
     return this.cart;
   }
 
-  checkout() {
+  async checkout() {
     if (this.cart.length === 0) {
       alert('Your cart is empty!');
       return;
     }
-    
+
+    const name = prompt('Enter your full name:');
+    const email = prompt('Enter your email address:');
+    const phone = prompt('Enter your phone number:');
+    const address = prompt('Enter your delivery address:');
     const total = this.getCartTotal();
-    alert(`Checkout successful! Total: ${formatCurrency(total)}\n\nThank you for shopping at Sharkawy Phones!`);
-    this.cart = [];
-    this.saveCart();
-    this.updateCartUI();
+
+    if (!name || !email || !phone || !address) {
+      alert('Order cancelled. All customer details are required.');
+      return;
+    }
+
+    const paymentMessage = `Payment method: Vodafone Cash\nSend ${this.formatCurrency(total)} to: 01092563878\nAfter sending, keep your transfer confirmation.`;
+    if (!confirm(`${paymentMessage}\n\nPress OK after you understand the payment instructions.`)) {
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/api/email/order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customer: { name, email, phone, address },
+          items: this.cart,
+          total,
+          paymentMethod: 'Vodafone Cash',
+          paymentNumber: '01092563878'
+        })
+      });
+      const result = await response.json();
+
+      if (!response.ok) throw new Error(result.message || 'Could not send order.');
+
+      alert('Your order request was sent successfully. Send the payment to Vodafone Cash number 01092563878, then we will confirm your order.');
+      this.cart = [];
+      this.saveCart();
+      this.updateCartUI();
+      this.displayCart();
+    } catch (error) {
+      alert(`Could not send your order: ${error.message}`);
+    }
   }
 
   showNotification(message) {
@@ -178,23 +219,21 @@ class ShoppingCart {
     if (cartIcon) {
       cartIcon.addEventListener('click', () => {
         this.displayCart();
-        if (cartModal) cartModal.style.display = 'block';
+        cartModal.style.display = 'block';
       });
     }
 
     if (closeCart) {
       closeCart.addEventListener('click', () => {
-        if (cartModal) cartModal.style.display = 'none';
+        cartModal.style.display = 'none';
       });
     }
 
-    if (cartModal) {
-      window.addEventListener('click', (e) => {
-        if (e.target === cartModal) {
-          cartModal.style.display = 'none';
-        }
-      });
-    }
+    window.addEventListener('click', (e) => {
+      if (e.target === cartModal) {
+        cartModal.style.display = 'none';
+      }
+    });
   }
 
   displayCart() {
@@ -207,7 +246,7 @@ class ShoppingCart {
     
     if (this.cart.length === 0) {
       cartList.innerHTML = '<p style="text-align: center; padding: 20px;">Your cart is empty</p>';
-      if (cartTotal) cartTotal.textContent = formatCurrency(0);
+      if (cartTotal) cartTotal.textContent = '0.00 EGP';
       return;
     }
 
@@ -220,7 +259,7 @@ class ShoppingCart {
         </div>
         <div class="cart-item-details">
           <h4>${item.name}</h4>
-          <p class="item-price">${formatCurrency(item.price)}</p>
+          <p class="item-price">${this.formatCurrency(item.price)}</p>
         </div>
         <div class="cart-item-quantity">
           <button onclick="cart.updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
@@ -228,7 +267,7 @@ class ShoppingCart {
           <button onclick="cart.updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
         </div>
         <div class="cart-item-total">
-          ${formatCurrency(item.price * item.quantity)}
+          ${this.formatCurrency(item.price * item.quantity)}
         </div>
         <button class="remove-btn" onclick="cart.removeFromCart(${item.id})">🗑️</button>
       `;
@@ -237,7 +276,7 @@ class ShoppingCart {
 
     if (cartTotal) {
       const total = this.getCartTotal();
-      cartTotal.textContent = formatCurrency(total);
+      cartTotal.textContent = this.formatCurrency(total);
     }
   }
 }
@@ -250,27 +289,27 @@ class ImageSlider {
     this.slides = [];
     this.slideImages = [
       {
-        image: 'iphone 16 pro.jpeg',
+        image: 'images/iphone 16 pro.jpeg',
         title: 'iPhone 16 Pro',
-        price: 999,
+        price: '999 EGP',
         link: '#'
       },
       {
-        image: 'iphone-17-pro.webp',
+        image: 'images/iphone-17-pro.webp',
         title: 'iPhone 17 Pro',
-        price: 1299,
+        price: '1,299 EGP',
         link: '#'
       },
       {
-        image: 'iphone 17.jpg',
+        image: 'images/iphone 17.jpg',
         title: 'iPhone 17',
-        price: 1099,
+        price: '1,099 EGP',
         link: '#'
       },
       {
-        image: 'iphone 16.webp',
+        image: 'images/iphone 16.webp',
         title: 'iPhone 16',
-        price: 799,
+        price: '799 EGP',
         link: '#'
       }
     ];
@@ -296,7 +335,7 @@ class ImageSlider {
                 <img src="${item.image}" alt="${item.title}">
                 <div class="slide-info">
                   <h3>${item.title}</h3>
-                  <p class="slide-price">${formatCurrency(item.price)}</p>
+                  <p class="slide-price">${item.price}</p>
                   <a href="${item.link}" class="slide-link">View Details →</a>
                 </div>
               </div>
@@ -365,3 +404,4 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize slider on home page
   const slider = new ImageSlider('hero-slider');
 });
+
