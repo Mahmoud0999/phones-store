@@ -18,14 +18,14 @@ class ShoppingCart {
   loadProducts() {
     this.products = [
       // Phones
-      { id: 1, name: 'iPhone 16 Pro', price: 999, image: 'images/iphone 16 pro.jpeg', category: 'phones', specs: ['Display: 6.3-inch Super Retina XDR', 'Chip: A18 Pro', 'Camera: 48MP Pro camera system', 'Battery: All-day battery life'] },
-      { id: 2, name: 'iPhone 16', price: 799, image: 'images/iphone 16.webp', category: 'phones', specs: ['Display: 6.1-inch Super Retina XDR', 'Chip: A18', 'Camera: 48MP main camera', 'Battery: Up to 22 hours video playback'] },
-      { id: 3, name: 'iPhone 17', price: 1099, image: 'images/iphone 17.jpg', category: 'phones', specs: ['Display: 6.7-inch OLED display', 'Chip: Advanced performance chip', 'Camera: Dual 48MP lenses', 'Battery: Fast charging support'] },
-      { id: 4, name: 'iPhone 17 Pro', price: 1299, image: 'images/iphone-17-pro.webp', category: 'phones', specs: ['Display: 6.9-inch ProMotion display', 'Chip: Pro-level processing power', 'Camera: Triple 48MP setup', 'Battery: Ultra-efficient power management'] },
-      { id: 5, name: 'Realme Phone', price: 499, image: 'images/realme.jpg', category: 'phones', specs: ['Display: 6.5-inch AMOLED display', 'Chip: Fast octa-core processor', 'Camera: 108MP AI camera', 'Battery: 5000mAh battery'] },
+      { id: 1, name: 'iPhone 16 Pro', price: 999, image: 'iphone 16 pro.jpeg', category: 'phones', specs: ['Display: 6.3-inch Super Retina XDR', 'Chip: A18 Pro', 'Camera: 48MP Pro camera system', 'Battery: Ultra-long battery life'] },
+      { id: 2, name: 'iPhone 16', price: 799, image: 'iphone 16.webp', category: 'phones', specs: ['Display: 6.1-inch Super Retina XDR', 'Chip: A18', 'Camera: 48MP main camera', 'Battery: Ultra-long battery life'] },
+      { id: 3, name: 'iPhone 17', price: 1099, image: 'iphone 17.jpg', category: 'phones', specs: ['Display: 6.7-inch OLED display', 'Chip: Advanced performance chip', 'Camera: Dual 48MP lens system', 'Battery: Extended battery technology'] },
+      { id: 4, name: 'iPhone 17 Pro', price: 1299, image: 'iphone-17-pro.webp', category: 'phones', specs: ['Display: 6.9-inch ProMotion display', 'Chip: Pro-level processing power', 'Camera: Triple camera setup with 48MP main', 'Battery: Premium battery performance'] },
+      { id: 5, name: 'Realme Phone', price: 499, image: 'realme.jpg', category: 'phones', specs: ['Display: 6.5-inch AMOLED display', 'Chip: Fast octa-core processor', 'Camera: 108MP AI camera system', 'Battery: 5000mAh capacity'] },
       // Accessories
-      { id: 6, name: 'AirPods Pro', price: 249, image: 'images/airpods.jpg', category: 'accessories', specs: ['Bluetooth: 5.3 support', 'Battery: Up to 6 hours listening time', 'Features: Active Noise Cancellation', 'Charging: Wireless charging case'] },
-      { id: 7, name: 'Fast Charger', price: 49.99, image: 'images/charger.jpg', category: 'accessories', specs: ['Power: 65W fast charging', 'Compatibility: USB-C devices', 'Safety: Smart temperature control', 'Cable: Included in box'] }
+      { id: 6, name: 'AirPods Pro', price: 249, image: 'airpods.jpg', category: 'accessories', specs: ['Bluetooth: 5.3 support', 'Battery: Up to 6 hours listening time', 'Features: Active Noise Cancellation', 'Design: Premium comfort fit'] },
+      { id: 7, name: 'Fast Charger', price: 49.99, image: 'charger.jpg', category: 'accessories', specs: ['Power: 65W fast charging', 'Compatibility: USB-C devices', 'Safety: Smart temperature control', 'Speed: Full charge in 30 minutes'] },
     ];
   }
 
@@ -289,25 +289,25 @@ class ImageSlider {
     this.slides = [];
     this.slideImages = [
       {
-        image: 'images/iphone 16 pro.jpeg',
+        image: 'iphone 16 pro.jpeg',
         title: 'iPhone 16 Pro',
         price: '999 EGP',
         link: '#'
       },
       {
-        image: 'images/iphone-17-pro.webp',
+        image: 'iphone-17-pro.webp',
         title: 'iPhone 17 Pro',
         price: '1,299 EGP',
         link: '#'
       },
       {
-        image: 'images/iphone 17.jpg',
+        image: 'iphone 17.jpg',
         title: 'iPhone 17',
         price: '1,099 EGP',
         link: '#'
       },
       {
-        image: 'images/iphone 16.webp',
+        image: 'iphone 16.webp',
         title: 'iPhone 16',
         price: '799 EGP',
         link: '#'
@@ -404,4 +404,3 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize slider on home page
   const slider = new ImageSlider('hero-slider');
 });
-
