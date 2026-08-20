@@ -4,18 +4,6 @@ const API_BASE_URL = 'http://localhost:5000/api';
 // Utility function to get JWT token from localStorage
 const getAuthToken = () => localStorage.getItem('auth_token');
 
-// Format currency for Egyptian Pound
-function formatCurrency(amount) {
-  return `EGP ${amount.toFixed(2)}`; // change display to Egyptian Pound
-}
-
-// Utility to parse a price string safely (removes any non-numeric chars)
-function parsePriceString(priceStr) {
-  if (typeof priceStr === 'number') return priceStr;
-  const cleaned = String(priceStr).replace(/[^\d.-]/g, '');
-  return parseFloat(cleaned) || 0;
-}
-
 // API Helper Functions
 const apiCall = async (endpoint, options = {}) => {
   const headers = {
@@ -82,14 +70,7 @@ class ShoppingCart {
       { id: 4, name: 'iPhone 17 Pro', price: 1299, image: 'images/iphone-17-pro.webp', category: 'phones' },
       { id: 5, name: 'Realme Phone', price: 499, image: 'images/realme.jpg', category: 'phones' },
       { id: 6, name: 'AirPods Pro', price: 249, image: 'images/airpods.jpg', category: 'accessories' },
-      { id: 7, name: 'Fast Charger (Type-C)', price: 49.99, image: 'images/charger.jpg', category: 'accessories' },
-      // Additional accessories with real-image links (Unsplash source)
-      { id: 8, name: 'Phone Case', price: 199, image: 'https://source.unsplash.com/800x600/?phone,case', category: 'accessories' },
-      { id: 9, name: 'Power Bank', price: 299, image: 'https://source.unsplash.com/800x600/?powerbank', category: 'accessories' },
-      { id: 10, name: 'Tripod Mount', price: 149, image: 'https://source.unsplash.com/800x600/?tripod,mount', category: 'accessories' },
-      { id: 11, name: 'Magnetic Car Mount', price: 129, image: 'https://source.unsplash.com/800x600/?car,mount,magnetic', category: 'accessories' },
-      { id: 12, name: 'Type-C Charger', price: 89, image: 'https://source.unsplash.com/800x600/?type-c,charger', category: 'accessories' },
-      { id: 13, name: 'Tempered Glass Screen', price: 69, image: 'https://source.unsplash.com/800x600/?screen,protector,glass', category: 'accessories' }
+      { id: 7, name: 'Fast Charger', price: 49.99, image: 'images/charger.jpg', category: 'accessories' }
     ];
   }
 
@@ -100,7 +81,7 @@ class ShoppingCart {
         const productCard = e.target.closest('.product-card');
         if (productCard) {
           const productName = productCard.querySelector('h3').textContent;
-          const productPrice = parsePriceString(productCard.querySelector('.price').textContent);
+          const productPrice = parseFloat(productCard.querySelector('.price').textContent.replace('$', ''));
           const productImage = productCard.querySelector('.product-image img')?.src || productCard.querySelector('.product-image').textContent;
           
           let product = this.products.find(p => p.name === productName);
@@ -229,7 +210,7 @@ class ShoppingCart {
         })
       });
       
-      alert(`Order created successfully!\nOrder #: ${orderResponse.data.orderNumber}\nTotal: ${formatCurrency(total)}`);
+      alert(`Order created successfully!\nOrder #: ${orderResponse.data.orderNumber}\nTotal: ${total.toFixed(2)} EGP`);
       
       this.cart = [];
       this.saveCart();
@@ -294,7 +275,7 @@ class ShoppingCart {
     
     if (this.cart.length === 0) {
       cartList.innerHTML = '<p style="text-align: center; padding: 20px;">Your cart is empty</p>';
-      if (cartTotal) cartTotal.textContent = formatCurrency(0);
+      if (cartTotal) cartTotal.textContent = '0.00 EGP';
       return;
     }
 
@@ -307,7 +288,7 @@ class ShoppingCart {
         </div>
         <div class="cart-item-details">
           <h4>${item.name}</h4>
-          <p class="item-price">${formatCurrency(item.price)}</p>
+          <p class="item-price">${item.price.toFixed(2)} EGP</p>
         </div>
         <div class="cart-item-quantity">
           <button onclick="cart.updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
@@ -315,7 +296,7 @@ class ShoppingCart {
           <button onclick="cart.updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
         </div>
         <div class="cart-item-total">
-          ${formatCurrency(item.price * item.quantity)}
+          ${(item.price * item.quantity).toFixed(2)} EGP
         </div>
         <button class="remove-btn" onclick="cart.removeFromCart(${item.id})">🗑️</button>
       `;
@@ -324,7 +305,7 @@ class ShoppingCart {
 
     if (cartTotal) {
       const total = this.getCartTotal();
-      cartTotal.textContent = formatCurrency(total);
+      cartTotal.textContent = `${total.toFixed(2)} EGP`;
     }
   }
 }
@@ -339,25 +320,25 @@ class ImageSlider {
       {
         image: 'images/iphone 16 pro.jpeg',
         title: 'iPhone 16 Pro',
-        price: 999,
+        price: '999 EGP',
         link: '#'
       },
       {
         image: 'images/iphone-17-pro.webp',
         title: 'iPhone 17 Pro',
-        price: 1299,
+        price: '1,299 EGP',
         link: '#'
       },
       {
         image: 'images/iphone 17.jpg',
         title: 'iPhone 17',
-        price: 1099,
+        price: '1,099 EGP',
         link: '#'
       },
       {
         image: 'images/iphone 16.webp',
         title: 'iPhone 16',
-        price: 799,
+        price: '799 EGP',
         link: '#'
       }
     ];
@@ -383,7 +364,7 @@ class ImageSlider {
                 <img src="${item.image}" alt="${item.title}">
                 <div class="slide-info">
                   <h3>${item.title}</h3>
-                  <p class="slide-price">${formatCurrency(item.price)}</p>
+                  <p class="slide-price">${item.price}</p>
                   <a href="${item.link}" class="slide-link">View Details →</a>
                 </div>
               </div>
