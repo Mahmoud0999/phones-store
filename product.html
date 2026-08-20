@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Product — Sharkawy Phones</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Small page-specific overrides */
+    .product-page { max-width: 1100px; margin: 36px auto; padding: 20px; }
+    .product-grid { display:flex; gap:28px; align-items:flex-start; flex-wrap:wrap; }
+    .product-image { flex:1 1 420px; background:#f6fbff; padding:18px; border-radius:10px; display:flex; justify-content:center; align-items:center; }
+    .product-image img{ max-width:100%; height:auto; border-radius:8px; }
+    .product-info { flex:1 1 420px; }
+    .product-title { font-size:30px; margin:0 0 12px; }
+    .product-price { font-size:24px; color:#0066ff; margin:8px 0; font-weight:800; }
+    .buy-actions { margin-top:18px; display:flex; gap:10px; }
+    .btn { padding:12px 18px; border-radius:28px; border:none; cursor:pointer; font-weight:700; }
+    .btn-cart { background:linear-gradient(135deg,#0066ff,#00d4ff); color:white; }
+    .btn-buy { background:#00c853; color:white; }
+    .meta { color:#666; margin-top:12px }
+  </style>
+</head>
+<body>
+  <div class="product-page">
+    <a href="accessories.html">← Back to Accessories</a>
+    <div class="product-grid" id="product-root">
+      <div class="product-image" id="product-image">
+        <!-- product image inserted by JS -->
+      </div>
+      <div class="product-info">
+        <h1 id="product-title" class="product-title">Product</h1>
+        <div id="product-price" class="product-price">EGP 0.00</div>
+        <p id="product-desc">Product description goes here.</p>
+        <div class="buy-actions">
+          <button id="add-to-cart" class="btn btn-cart">Add to Cart</button>
+          <button id="buy-now" class="btn btn-buy">Buy Now</button>
+        </div>
+        <p class="meta">Prices shown in Egyptian Pound (EGP). Use Add to Cart to collect items then checkout.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Local currency formatter (matches shopping.js)
+    function formatCurrency(amount){
+      const n = Number(String(amount).replace(/[^0-9.-]/g,'')) || 0;
+      return `EGP ${n.toFixed(2)}`;
+    }
+
+    function getParams(){
+      const p = new URLSearchParams(window.location.search);
+      return {
+        name: p.get('name') ? decodeURIComponent(p.get('name')) : '',
+        price: p.get('price') ? decodeURIComponent(p.get('price')) : '',
+        image: p.get('image') ? decodeURIComponent(p.get('image')) : '',
+        desc: p.get('desc') ? decodeURIComponent(p.get('desc')) : ''
+      };
+    }
+
+    function resolveImage(src){
+      if(!src) return 'iphone case.png';
+      try{ new URL(src); return src; }catch(e){ return src; }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = getParams();
+      const titleEl = document.getElementById('product-title');
+      const priceEl = document.getElementById('product-price');
+      const descEl = document.getElementById('product-desc');
+      const imageWrap = document.getElementById('product-image');
+
+      titleEl.textContent = params.name || 'Product';
+      priceEl.textContent = formatCurrency(params.price || 0);
+      descEl.textContent = params.desc || 'No description provided.';
+
+      const img = document.createElement('img');
+      img.src = resolveImage(params.image);
+      img.alt = params.name || 'Product Image';
+      img.loading = 'lazy';
+      img.onerror = () => { img.src = 'iphone case.png'; };
+      imageWrap.appendChild(img);
+
+      // Add to cart action (reuses global cart if available)
+      document.getElementById('add-to-cart').addEventListener('click', () => {
+        const priceNum = Number(String(params.price).replace(/[^0-9.-]/g,'')) || 0;
+        const product = { id: Date.now(), name: params.name || 'Product', price: priceNum, image: img.src };
+        if (window.cart && typeof window.cart.addToCart === 'function'){
+          window.cart.addToCart(product);
+          alert('Added to cart');
+        } else {
+          // Fallback: store in localStorage
+          const stored = JSON.parse(localStorage.getItem('sharkawyCart') || '[]');
+          stored.push({...product, quantity:1});
+          localStorage.setItem('sharkawyCart', JSON.stringify(stored));
+          alert('Added to local cart (site cart not loaded).');
+        }
+      });
+
+      // Buy Now button - no external action per your request
+      document.getElementById('buy-now').addEventListener('click', () => {
+        alert('This is the product page. The purchase flow is not configured. Use Add to Cart to continue.');
+      });
+    });
+  </script>
+</body>
+</html>
