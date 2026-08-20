@@ -1,6 +1,3 @@
-// Shopping Cart Management System
-
-// Format currency for Egyptian Pound
 class ShoppingCart {
   constructor() {
     this.cart = JSON.parse(localStorage.getItem('sharkawyCart')) || [];
@@ -18,14 +15,20 @@ class ShoppingCart {
   loadProducts() {
     this.products = [
       // Phones
-      { id: 1, name: 'iPhone 16 Pro', price: 999, image: 'iphone 16 pro.jpeg', category: 'phones', specs: ['Display: 6.3-inch Super Retina XDR', 'Chip: A18 Pro', 'Camera: 48MP Pro camera system', 'Battery: Ultra-long battery life'] },
-      { id: 2, name: 'iPhone 16', price: 799, image: 'iphone 16.webp', category: 'phones', specs: ['Display: 6.1-inch Super Retina XDR', 'Chip: A18', 'Camera: 48MP main camera', 'Battery: Ultra-long battery life'] },
-      { id: 3, name: 'iPhone 17', price: 1099, image: 'iphone 17.jpg', category: 'phones', specs: ['Display: 6.7-inch OLED display', 'Chip: Advanced performance chip', 'Camera: Dual 48MP lens system', 'Battery: Extended battery technology'] },
-      { id: 4, name: 'iPhone 17 Pro', price: 1299, image: 'iphone-17-pro.webp', category: 'phones', specs: ['Display: 6.9-inch ProMotion display', 'Chip: Pro-level processing power', 'Camera: Triple camera setup with 48MP main', 'Battery: Premium battery performance'] },
-      { id: 5, name: 'Realme Phone', price: 499, image: 'realme.jpg', category: 'phones', specs: ['Display: 6.5-inch AMOLED display', 'Chip: Fast octa-core processor', 'Camera: 108MP AI camera system', 'Battery: 5000mAh capacity'] },
+      { id: 1, name: 'iPhone 16 Pro', price: 999, image: 'iphone 16 pro.jpeg', category: 'phones', specs: ['Display: 6.3-inch Super Retina XDR', 'Chip: A18 Pro', 'Camera: 48MP Pro camera system', 'Battery: All-day battery life'] },
+      { id: 2, name: 'iPhone 16', price: 799, image: 'iphone 16.webp', category: 'phones', specs: ['Display: 6.1-inch Super Retina XDR', 'Chip: A18', 'Camera: 48MP main camera', 'Battery: Up to 22 hours video playback'] },
+      { id: 3, name: 'iPhone 17', price: 1099, image: 'iphone 17.jpg', category: 'phones', specs: ['Display: 6.7-inch OLED display', 'Chip: Advanced performance chip', 'Camera: Dual 48MP lenses', 'Battery: Fast charging support'] },
+      { id: 4, name: 'iPhone 17 Pro', price: 1299, image: 'iphone-17-pro.webp', category: 'phones', specs: ['Display: 6.9-inch ProMotion display', 'Chip: Pro-level processing power', 'Camera: Triple 48MP setup', 'Battery: Ultra-efficient power management'] },
+      { id: 5, name: 'Realme Phone', price: 499, image: 'realme.jpg', category: 'phones', specs: ['Display: 6.5-inch AMOLED display', 'Chip: Fast octa-core processor', 'Camera: 108MP AI camera', 'Battery: 5000mAh battery'] },
       // Accessories
-      { id: 6, name: 'AirPods Pro', price: 249, image: 'airpods.jpg', category: 'accessories', specs: ['Bluetooth: 5.3 support', 'Battery: Up to 6 hours listening time', 'Features: Active Noise Cancellation', 'Design: Premium comfort fit'] },
-      { id: 7, name: 'Fast Charger', price: 49.99, image: 'charger.jpg', category: 'accessories', specs: ['Power: 65W fast charging', 'Compatibility: USB-C devices', 'Safety: Smart temperature control', 'Speed: Full charge in 30 minutes'] },
+      { id: 6, name: 'AirPods Pro', price: 249, image: 'airpods.jpg', category: 'accessories', specs: ['Bluetooth: 5.3 support', 'Battery: Up to 6 hours listening time', 'Features: Active Noise Cancellation', 'Charging: Wireless charging case'] },
+      { id: 7, name: 'Fast Charger', price: 49.99, image: 'charger.jpg', category: 'accessories', specs: ['Power: 65W fast charging', 'Compatibility: USB-C devices', 'Safety: Smart temperature control', 'Cable: Included in box'] },
+      { id: 8, name: 'Premium Phone Case', price: 24.99, image: 'iphone case.png', category: 'accessories', specs: ['Material: Shockproof TPU shell', 'Fit: Compatible with large phone models', 'Protection: Drop and scratch resistant', 'Finish: Premium matte design'] },
+      { id: 9, name: 'Power Bank 20000mAh', price: 39.99, image: 'power bank.jpg', category: 'accessories', specs: ['Capacity: 20000mAh', 'Input/Output: Fast charging support', 'Compatibility: iPhone & Android', 'Safety: Smart power management'] },
+      { id: 10, name: 'Phone Tripod Mount', price: 19.99, image: 'tripod mount.jpg', category: 'accessories', specs: ['Adjustable: Flexible height and angle', 'Grip: Secure phone hold', 'Use: Vlogging and video calls', 'Material: Sturdy aluminum build'] },
+      { id: 11, name: 'Magnetic Car Mount', price: 15.99, image: 'magnatic car mount.webp', category: 'accessories', specs: ['Mount type: Magnetic car mount', 'Strength: Secure hold on the go', 'Installation: Easy adhesive setup', 'Compatibility: Most smartphones'] },
+      { id: 12, name: 'USB-C Cable (3 pack)', price: 19.99, image: 'type c charger.jpg', category: 'accessories', specs: ['Cable type: USB-C', 'Quantity: 3 in pack', 'Speed: Fast data and charging', 'Compatibility: Modern devices'] },
+      { id: 13, name: 'Tempered Glass Screen Protector', price: 12.99, image: 'glass screen.jpg', category: 'accessories', specs: ['Material: Tempered glass', 'Protection: Scratch resistant', 'Hardness: 9H glass', 'Finish: HD clarity with touch sensitivity'] }
     ];
   }
 
