@@ -64,13 +64,13 @@ class ShoppingCart {
 
   loadFallbackProducts() {
     this.products = [
-      { id: 1, name: 'iPhone 16 Pro', price: 999, image: 'images/iphone 16 pro.jpeg', category: 'phones' },
-      { id: 2, name: 'iPhone 16', price: 799, image: 'images/iphone 16.webp', category: 'phones' },
-      { id: 3, name: 'iPhone 17', price: 1099, image: 'images/iphone 17.jpg', category: 'phones' },
-      { id: 4, name: 'iPhone 17 Pro', price: 1299, image: 'images/iphone-17-pro.webp', category: 'phones' },
-      { id: 5, name: 'Realme Phone', price: 499, image: 'images/realme.jpg', category: 'phones' },
-      { id: 6, name: 'AirPods Pro', price: 249, image: 'images/airpods.jpg', category: 'accessories' },
-      { id: 7, name: 'Fast Charger', price: 49.99, image: 'images/charger.jpg', category: 'accessories' }
+      { id: 1, name: 'iPhone 16 Pro', price: 999, image: 'iphone 16 pro.jpeg', category: 'phones' },
+      { id: 2, name: 'iPhone 16', price: 799, image: 'iphone 16.webp', category: 'phones' },
+      { id: 3, name: 'iPhone 17', price: 1099, image: 'iphone 17.jpg', category: 'phones' },
+      { id: 4, name: 'iPhone 17 Pro', price: 1299, image: 'iphone-17-pro.webp', category: 'phones' },
+      { id: 5, name: 'Realme Phone', price: 499, image: 'realme.jpg', category: 'phones' },
+      { id: 6, name: 'AirPods Pro', price: 249, image: 'airpods.jpg', category: 'accessories' },
+      { id: 7, name: 'Fast Charger', price: 49.99, image: 'charger.jpg', category: 'accessories' }
     ];
   }
 
@@ -318,25 +318,25 @@ class ImageSlider {
     this.slides = [];
     this.slideImages = [
       {
-        image: 'images/iphone 16 pro.jpeg',
+        image: 'iphone 16 pro.jpeg',
         title: 'iPhone 16 Pro',
         price: '999 EGP',
         link: '#'
       },
       {
-        image: 'images/iphone-17-pro.webp',
+        image: 'iphone-17-pro.webp',
         title: 'iPhone 17 Pro',
         price: '1,299 EGP',
         link: '#'
       },
       {
-        image: 'images/iphone 17.jpg',
+        image: 'iphone 17.jpg',
         title: 'iPhone 17',
         price: '1,099 EGP',
         link: '#'
       },
       {
-        image: 'images/iphone 16.webp',
+        image: 'iphone 16.webp',
         title: 'iPhone 16',
         price: '799 EGP',
         link: '#'
@@ -433,3 +433,4 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize slider on home page
   const slider = new ImageSlider('hero-slider');
 });
+
