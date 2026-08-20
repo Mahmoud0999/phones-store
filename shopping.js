@@ -1,4 +1,17 @@
 // Shopping Cart Management System
+
+// Format currency for Egyptian Pound
+function formatCurrency(amount) {
+  return `EGP ${Number(amount).toFixed(2)}`;
+}
+
+// Utility to parse a price string safely (removes any non-numeric chars)
+function parsePriceString(priceStr) {
+  if (typeof priceStr === 'number') return priceStr;
+  const cleaned = String(priceStr).replace(/[^0-9.-]/g, '');
+  return parseFloat(cleaned) || 0;
+}
+
 class ShoppingCart {
   constructor() {
     this.cart = JSON.parse(localStorage.getItem('sharkawyCart')) || [];
@@ -23,7 +36,7 @@ class ShoppingCart {
       { id: 5, name: 'Realme Phone', price: 499, image: 'realme.jpg', category: 'phones' },
       // Accessories
       { id: 6, name: 'AirPods Pro', price: 249, image: 'airpods.jpg', category: 'accessories' },
-      { id: 7, name: 'Fast Charger', price: 49.99, image: 'charger.jpg', category: 'accessories' }
+      { id: 7, name: 'Fast Charger (Type-C)', price: 49.99, image: 'charger.jpg', category: 'accessories' }
     ];
   }
 
@@ -34,7 +47,7 @@ class ShoppingCart {
         const productCard = e.target.closest('.product-card');
         if (productCard) {
           const productName = productCard.querySelector('h3').textContent;
-          const productPrice = parseFloat(productCard.querySelector('.price').textContent.replace('$', ''));
+          const productPrice = parsePriceString(productCard.querySelector('.price').textContent);
           const productImage = productCard.querySelector('.product-image img')?.src || productCard.querySelector('.product-image').textContent;
           
           // Find product by name
@@ -87,7 +100,6 @@ class ShoppingCart {
 
   updateCartUI() {
     const cartCount = document.getElementById('cart-count');
-    const cartIcon = document.querySelector('.cart-icon');
     
     if (cartCount) {
       const totalItems = this.cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -111,7 +123,7 @@ class ShoppingCart {
     }
     
     const total = this.getCartTotal();
-    alert(`Checkout successful! Total: $${total.toFixed(2)}\n\nThank you for shopping at Sharkawy Phones!`);
+    alert(`Checkout successful! Total: ${formatCurrency(total)}\n\nThank you for shopping at Sharkawy Phones!`);
     this.cart = [];
     this.saveCart();
     this.updateCartUI();
@@ -142,21 +154,23 @@ class ShoppingCart {
     if (cartIcon) {
       cartIcon.addEventListener('click', () => {
         this.displayCart();
-        cartModal.style.display = 'block';
+        if (cartModal) cartModal.style.display = 'block';
       });
     }
 
     if (closeCart) {
       closeCart.addEventListener('click', () => {
-        cartModal.style.display = 'none';
+        if (cartModal) cartModal.style.display = 'none';
       });
     }
 
-    window.addEventListener('click', (e) => {
-      if (e.target === cartModal) {
-        cartModal.style.display = 'none';
-      }
-    });
+    if (cartModal) {
+      window.addEventListener('click', (e) => {
+        if (e.target === cartModal) {
+          cartModal.style.display = 'none';
+        }
+      });
+    }
   }
 
   displayCart() {
@@ -169,7 +183,7 @@ class ShoppingCart {
     
     if (this.cart.length === 0) {
       cartList.innerHTML = '<p style="text-align: center; padding: 20px;">Your cart is empty</p>';
-      if (cartTotal) cartTotal.textContent = '$0.00';
+      if (cartTotal) cartTotal.textContent = formatCurrency(0);
       return;
     }
 
@@ -182,7 +196,7 @@ class ShoppingCart {
         </div>
         <div class="cart-item-details">
           <h4>${item.name}</h4>
-          <p class="item-price">$${item.price.toFixed(2)}</p>
+          <p class="item-price">${formatCurrency(item.price)}</p>
         </div>
         <div class="cart-item-quantity">
           <button onclick="cart.updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
@@ -190,7 +204,7 @@ class ShoppingCart {
           <button onclick="cart.updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
         </div>
         <div class="cart-item-total">
-          $${(item.price * item.quantity).toFixed(2)}
+          ${formatCurrency(item.price * item.quantity)}
         </div>
         <button class="remove-btn" onclick="cart.removeFromCart(${item.id})">🗑️</button>
       `;
@@ -199,7 +213,7 @@ class ShoppingCart {
 
     if (cartTotal) {
       const total = this.getCartTotal();
-      cartTotal.textContent = `$${total.toFixed(2)}`;
+      cartTotal.textContent = formatCurrency(total);
     }
   }
 }
@@ -214,25 +228,25 @@ class ImageSlider {
       {
         image: 'iphone 16 pro.jpeg',
         title: 'iPhone 16 Pro',
-        price: '$999',
+        price: 999,
         link: '#'
       },
       {
         image: 'iphone-17-pro.webp',
         title: 'iPhone 17 Pro',
-        price: '$1,299',
+        price: 1299,
         link: '#'
       },
       {
         image: 'iphone 17.jpg',
         title: 'iPhone 17',
-        price: '$1,099',
+        price: 1099,
         link: '#'
       },
       {
         image: 'iphone 16.webp',
         title: 'iPhone 16',
-        price: '$799',
+        price: 799,
         link: '#'
       }
     ];
@@ -258,7 +272,7 @@ class ImageSlider {
                 <img src="${item.image}" alt="${item.title}">
                 <div class="slide-info">
                   <h3>${item.title}</h3>
-                  <p class="slide-price">${item.price}</p>
+                  <p class="slide-price">${formatCurrency(item.price)}</p>
                   <a href="${item.link}" class="slide-link">View Details →</a>
                 </div>
               </div>
