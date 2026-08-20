@@ -24,6 +24,7 @@ class ShoppingCart {
     this.loadProducts();
     this.updateCartUI();
     this.attachAddToCartButtons();
+    this.attachBuyButtons();
   }
 
   loadProducts() {
@@ -59,6 +60,29 @@ class ShoppingCart {
           this.addToCart(product);
           this.showNotification('Added to cart!');
         }
+      });
+    });
+  }
+
+  attachBuyButtons() {
+    const buyButtons = document.querySelectorAll('.buy-btn');
+    buyButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const productCard = e.target.closest('.product-card');
+        if (!productCard) return;
+        const name = productCard.querySelector('h3')?.textContent || '';
+        const price = productCard.querySelector('.price')?.textContent || '';
+        const img = productCard.querySelector('.product-image img')?.getAttribute('src') || '';
+        const desc = productCard.querySelector('.description')?.textContent || '';
+
+        const params = new URLSearchParams({
+          name: name,
+          price: price,
+          image: img,
+          desc: desc
+        });
+
+        window.location.href = `product.html?${params.toString()}`;
       });
     });
   }
