@@ -1,24 +1,27 @@
 {
-  "name": "@babel/helper-plugin-utils",
+  "name": "@babel/helper-validator-option",
   "version": "7.29.7",
-  "description": "General utilities for plugins to use",
-  "author": "The Babel Team (https://babel.dev/team)",
-  "homepage": "https://babel.dev/docs/en/next/babel-helper-plugin-utils",
+  "description": "Validate plugin/preset options",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/babel/babel.git",
+    "directory": "packages/babel-helper-validator-option"
+  },
   "license": "MIT",
   "publishConfig": {
     "access": "public"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/babel/babel.git",
-    "directory": "packages/babel-helper-plugin-utils"
-  },
   "main": "./lib/index.js",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "engines": {
     "node": ">=6.9.0"
   },
-  "devDependencies": {
-    "@babel/core": "^7.29.7"
-  },
+  "author": "The Babel Team (https://babel.dev/team)",
   "type": "commonjs"
 }
