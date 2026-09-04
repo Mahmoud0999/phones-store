@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Sharkawy Phones</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-section">
+                <h1 class="logo">SHAR<span class="logo-phone">📱</span>AWY</h1>
+            </div>
+            <ul class="nav-list">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="the best selling.html">Best Selling</a></li>
+                <li><a href="accessories.html">Accessories</a></li>
+                <li><a href="Returnpolicy.html">Return Policy</a></li>
+                <li><a href="contactus.html">Contact Us</a></li>
+            </ul>
+            <a class="cart-icon checkout-cart-link" href="index.html" title="Back to store">🛒</a>
+        </div>
+    </nav>
+
+    <main class="checkout-page">
+        <div class="checkout-heading">
+            <p class="checkout-eyebrow">Secure order request</p>
+            <h1>Complete your purchase</h1>
+            <p>Enter your delivery details and we will contact you to confirm your order.</p>
+        </div>
+
+        <div id="empty-checkout" class="checkout-message" hidden>
+            <h2>Your cart is empty</h2>
+            <p>Add a product before starting checkout.</p>
+            <a href="index.html" class="checkout-link-button">Return to store</a>
+        </div>
+
+        <div id="checkout-layout" class="checkout-layout">
+            <section class="checkout-panel order-summary-panel" aria-labelledby="summary-title">
+                <div class="panel-heading">
+                    <span class="panel-number">01</span>
+                    <div>
+                        <h2 id="summary-title">Your order</h2>
+                        <p>Review your selected products.</p>
+                    </div>
+                </div>
+                <div id="checkout-items" class="checkout-items"></div>
+                <div class="checkout-total">
+                    <span>Total</span>
+                    <strong id="checkout-total-value">0.00 EGP</strong>
+                </div>
+            </section>
+
+            <section class="checkout-panel" aria-labelledby="details-title">
+                <div class="panel-heading">
+                    <span class="panel-number">02</span>
+                    <div>
+                        <h2 id="details-title">Customer details</h2>
+                        <p>These details help us deliver your order.</p>
+                    </div>
+                </div>
+                <form id="checkout-form">
+                    <div class="form-grid">
+                        <label class="form-field form-field-wide">
+                            Full name
+                            <input type="text" name="name" autocomplete="name" required maxlength="100" placeholder="Your full name">
+                        </label>
+                        <label class="form-field">
+                            Email address
+                            <input type="email" name="email" autocomplete="email" required maxlength="160" placeholder="you@example.com">
+                        </label>
+                        <label class="form-field">
+                            Phone number
+                            <input type="tel" name="phone" autocomplete="tel" required maxlength="30" placeholder="Your phone number">
+                        </label>
+                        <label class="form-field form-field-wide">
+                            Delivery address
+                            <textarea name="address" autocomplete="street-address" required maxlength="300" rows="3" placeholder="Street, building, city"></textarea>
+                        </label>
+                    </div>
+
+                    <div class="payment-box">
+                        <div>
+                            <span class="payment-label">Payment method</span>
+                            <h3>Vodafone Cash</h3>
+                            <p>Send the total to <strong>01092563878</strong> after submitting your order request.</p>
+                        </div>
+                        <label class="payment-confirmation">
+                            <input type="checkbox" name="paymentConfirmed" required>
+                            <span>I understand the payment instructions.</span>
+                        </label>
+                    </div>
+
+                    <p id="checkout-error" class="checkout-error" role="alert" hidden></p>
+                    <button id="submit-order" class="checkout-submit" type="submit">Send order request</button>
+                </form>
+                <div id="checkout-success" class="checkout-success" role="status" hidden>
+                    <span class="success-mark">✓</span>
+                    <h2>Order request sent</h2>
+                    <p>We received your request. Please complete the Vodafone Cash payment and we will contact you to confirm the order.</p>
+                    <a href="index.html" class="checkout-link-button">Continue shopping</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="checkout.js"></script>
+</body>
+</html>
