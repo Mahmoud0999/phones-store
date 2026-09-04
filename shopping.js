@@ -154,47 +154,7 @@ class ShoppingCart {
       alert('Your cart is empty!');
       return;
     }
-
-    const name = prompt('Enter your full name:');
-    const email = prompt('Enter your email address:');
-    const phone = prompt('Enter your phone number:');
-    const address = prompt('Enter your delivery address:');
-    const total = this.getCartTotal();
-
-    if (!name || !email || !phone || !address) {
-      alert('Order cancelled. All customer details are required.');
-      return;
-    }
-
-    const paymentMessage = `Payment method: Vodafone Cash\nSend ${this.formatCurrency(total)} to: 01092563878\nAfter sending, keep your transfer confirmation.`;
-    if (!confirm(`${paymentMessage}\n\nPress OK after you understand the payment instructions.`)) {
-      return;
-    }
-
-    try {
-      const response = await fetch('http://localhost:5000/api/email/order', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          customer: { name, email, phone, address },
-          items: this.cart,
-          total,
-          paymentMethod: 'Vodafone Cash',
-          paymentNumber: '01092563878'
-        })
-      });
-      const result = await response.json();
-
-      if (!response.ok) throw new Error(result.message || 'Could not send order.');
-
-      alert('Your order request was sent successfully. Send the payment to Vodafone Cash number 01092563878, then we will confirm your order.');
-      this.cart = [];
-      this.saveCart();
-      this.updateCartUI();
-      this.displayCart();
-    } catch (error) {
-      alert(`Could not send your order: ${error.message}`);
-    }
+    window.location.href = 'checkout.html';
   }
 
   showNotification(message) {
