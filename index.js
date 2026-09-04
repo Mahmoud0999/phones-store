@@ -3,147 +3,85 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports._getTypeAnnotation = _getTypeAnnotation;
-exports.baseTypeStrictlyMatches = baseTypeStrictlyMatches;
-exports.couldBeBaseType = couldBeBaseType;
-exports.getTypeAnnotation = getTypeAnnotation;
-exports.isBaseType = isBaseType;
-exports.isGenericType = isGenericType;
-var inferers = require("./inferers.js");
+Object.defineProperty(exports, "Hub", {
+  enumerable: true,
+  get: function () {
+    return _hub.default;
+  }
+});
+Object.defineProperty(exports, "NodePath", {
+  enumerable: true,
+  get: function () {
+    return _index.default;
+  }
+});
+Object.defineProperty(exports, "Scope", {
+  enumerable: true,
+  get: function () {
+    return _index2.default;
+  }
+});
+exports.visitors = exports.default = void 0;
+require("./path/context.js");
+var visitors = require("./visitors.js");
+exports.visitors = visitors;
 var _t = require("@babel/types");
+var cache = require("./cache.js");
+var _traverseNode = require("./traverse-node.js");
+var _index = require("./path/index.js");
+var _index2 = require("./scope/index.js");
+var _hub = require("./hub.js");
 const {
-  anyTypeAnnotation,
-  isAnyTypeAnnotation,
-  isArrayTypeAnnotation,
-  isBooleanTypeAnnotation,
-  isEmptyTypeAnnotation,
-  isFlowBaseAnnotation,
-  isGenericTypeAnnotation,
-  isIdentifier,
-  isMixedTypeAnnotation,
-  isNumberTypeAnnotation,
-  isStringTypeAnnotation,
-  isTSArrayType,
-  isTSTypeAnnotation,
-  isTSTypeReference,
-  isTupleTypeAnnotation,
-  isTypeAnnotation,
-  isUnionTypeAnnotation,
-  isVoidTypeAnnotation,
-  stringTypeAnnotation,
-  voidTypeAnnotation
+  VISITOR_KEYS,
+  removeProperties,
+  traverseFast
 } = _t;
-function getTypeAnnotation() {
-  let type = this.getData("typeAnnotation");
-  if (type != null) {
-    return type;
-  }
-  type = _getTypeAnnotation.call(this) || anyTypeAnnotation();
-  if (isTypeAnnotation(type) || isTSTypeAnnotation(type)) {
-    type = type.typeAnnotation;
-  }
-  this.setData("typeAnnotation", type);
-  return type;
-}
-const typeAnnotationInferringNodes = new WeakSet();
-function _getTypeAnnotation() {
-  const node = this.node;
-  if (!node) {
-    if (this.key === "init" && this.parentPath.isVariableDeclarator()) {
-      const declar = this.parentPath.parentPath;
-      const declarParent = declar.parentPath;
-      if (declar.key === "left" && declarParent.isForInStatement()) {
-        return stringTypeAnnotation();
-      }
-      if (declar.key === "left" && declarParent.isForOfStatement()) {
-        return anyTypeAnnotation();
-      }
-      return voidTypeAnnotation();
-    } else {
-      return;
+function traverse(parent, opts = {}, scope, state, parentPath, visitSelf) {
+  if (!parent) return;
+  if (!opts.noScope && !scope) {
+    if (parent.type !== "Program" && parent.type !== "File") {
+      throw new Error("You must pass a scope and parentPath unless traversing a Program/File. " + `Instead of that you tried to traverse a ${parent.type} node without ` + "passing scope and parentPath.");
     }
   }
-  if (node.typeAnnotation) {
-    return node.typeAnnotation;
+  if (!parentPath && visitSelf) {
+    throw new Error("visitSelf can only be used when providing a NodePath.");
   }
-  if (typeAnnotationInferringNodes.has(node)) {
+  if (!VISITOR_KEYS[parent.type]) {
     return;
   }
-  typeAnnotationInferringNodes.add(node);
-  try {
-    var _inferer;
-    let inferer = inferers[node.type];
-    if (inferer) {
-      return inferer.call(this, node);
-    }
-    inferer = inferers[this.parentPath.type];
-    if ((_inferer = inferer) != null && _inferer.validParent) {
-      return this.parentPath.getTypeAnnotation();
-    }
-  } finally {
-    typeAnnotationInferringNodes.delete(node);
-  }
+  visitors.explode(opts);
+  (0, _traverseNode.traverseNode)(parent, opts, scope, state, parentPath, undefined, visitSelf);
 }
-function isBaseType(baseName, soft) {
-  return _isBaseType(baseName, this.getTypeAnnotation(), soft);
-}
-function _isBaseType(baseName, type, soft) {
-  if (baseName === "string") {
-    return isStringTypeAnnotation(type);
-  } else if (baseName === "number") {
-    return isNumberTypeAnnotation(type);
-  } else if (baseName === "boolean") {
-    return isBooleanTypeAnnotation(type);
-  } else if (baseName === "any") {
-    return isAnyTypeAnnotation(type);
-  } else if (baseName === "mixed") {
-    return isMixedTypeAnnotation(type);
-  } else if (baseName === "empty") {
-    return isEmptyTypeAnnotation(type);
-  } else if (baseName === "void") {
-    return isVoidTypeAnnotation(type);
-  } else {
-    if (soft) {
-      return false;
-    } else {
-      throw new Error(`Unknown base type ${baseName}`);
+var _default = exports.default = traverse;
+traverse.visitors = visitors;
+traverse.verify = visitors.verify;
+traverse.explode = visitors.explode;
+traverse.cheap = function (node, enter) {
+  traverseFast(node, enter);
+  return;
+};
+traverse.node = function (node, opts, scope, state, path, skipKeys) {
+  (0, _traverseNode.traverseNode)(node, opts, scope, state, path, skipKeys);
+};
+traverse.clearNode = function (node, opts) {
+  removeProperties(node, opts);
+};
+traverse.removeProperties = function (tree, opts) {
+  traverseFast(tree, traverse.clearNode, opts);
+  return tree;
+};
+traverse.hasType = function (tree, type, denylistTypes) {
+  if (denylistTypes != null && denylistTypes.includes(tree.type)) return false;
+  if (tree.type === type) return true;
+  return traverseFast(tree, function (node) {
+    if (denylistTypes != null && denylistTypes.includes(node.type)) {
+      return traverseFast.skip;
     }
-  }
-}
-function couldBeBaseType(name) {
-  const type = this.getTypeAnnotation();
-  if (isAnyTypeAnnotation(type)) return true;
-  if (isUnionTypeAnnotation(type)) {
-    for (const type2 of type.types) {
-      if (isAnyTypeAnnotation(type2) || _isBaseType(name, type2, true)) {
-        return true;
-      }
+    if (node.type === type) {
+      return traverseFast.stop;
     }
-    return false;
-  } else {
-    return _isBaseType(name, type, true);
-  }
-}
-function baseTypeStrictlyMatches(rightArg) {
-  const left = this.getTypeAnnotation();
-  const right = rightArg.getTypeAnnotation();
-  if (!isAnyTypeAnnotation(left) && isFlowBaseAnnotation(left)) {
-    return right.type === left.type;
-  }
-  return false;
-}
-function isGenericType(genericName) {
-  const type = this.getTypeAnnotation();
-  if (genericName === "Array") {
-    if (isTSArrayType(type) || isArrayTypeAnnotation(type) || isTupleTypeAnnotation(type)) {
-      return true;
-    }
-  }
-  return isGenericTypeAnnotation(type) && isIdentifier(type.id, {
-    name: genericName
-  }) || isTSTypeReference(type) && isIdentifier(type.typeName, {
-    name: genericName
   });
-}
+};
+traverse.cache = cache;
 
 //# sourceMappingURL=index.js.map
